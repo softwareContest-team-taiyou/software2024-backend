@@ -1,9 +1,9 @@
-# go-graphql-template
+# [ソフトウェアコンテスト 2024](https://www.ogis-ri.co.jp/otc/contest/)
 
-This is a template when you want to implement a gRPC server in go on
-clean architecture.
+これはソフトウェアコンテスト 2024 のためのリポジトリです。
+フロントエンドは、go で実装し、通信方式は gRPC を採用しています
 
-# stack
+# 技術選定
 
 | Technology                     | Libraries and tools used |
 | ------------------------------ | ------------------------ |
@@ -14,10 +14,9 @@ clean architecture.
 | Seeds                          | Self-implementation      |
 | Schema                         | Graph QL                 |
 
-## index
+## インデックス
 
-- 🌳[set up on local](./docs/setUp.md)
-- 🍏[Database update](./docs/migration.md)
-- 📗[Directory structure](./docs/strucure.md)
-- 🍓[grpc proto](./docs/proto.md)
-# software2024-backend
+- 🌳[環境構築](./docs/setUp.md)
+- 🍏[DB 更新](./docs/migration.md)
+- 📗[ディレクトリー構成](./docs/strucure.md)
+- 🍓[api 作成手順](./docs/proto.md)
