@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/nagisa599/golang-grpc-template/internal/domain"
+	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain"
 )
 type TodoRepository interface{
 	GetTodo(ctx context.Context,id int) (*domain.Todo, error)

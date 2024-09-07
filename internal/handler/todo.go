@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 
-	todov1 "github.com/nagisa599/golang-grpc-template/gen/go/v1/todo"
-	"github.com/nagisa599/golang-grpc-template/internal/domain"
+	todov1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/todo"
+	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain"
 )
 type TodoUsecase interface {
 	GetTodo(ctx context.Context,id int) (*domain.Todo, error)

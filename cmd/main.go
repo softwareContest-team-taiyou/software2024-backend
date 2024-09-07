@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nagisa599/golang-grpc-template/infrastructure"
+import "github.com/softwareContest-team-taiyou/software2024-backend/infrastructure"
 
 
 

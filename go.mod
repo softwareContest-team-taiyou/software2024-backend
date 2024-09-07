@@ -1,4 +1,4 @@
-module github.com/nagisa599/golang-grpc-template
+module github.com/softwareContest-team-taiyou/software2024-backend
 
 go 1.22.4
 
