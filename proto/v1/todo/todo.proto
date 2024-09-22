@@ -8,6 +8,7 @@ service TodoService {
     rpc GetTodo (GetTodoRequest) returns (GetTodoResponse); 
     // Defines a method to create a todo item
     rpc CreateTodo (CreateTodoRequest) returns (CreateTodoResponse);
+    rpc GetAllTodos (GetAllTodosRequest) returns (GetAllTodosResponse);
 }
 enum Status {
     SUCCESS = 0;  // 成功
@@ -35,3 +36,11 @@ message CreateTodoRequest {
     string title = 1;
     string description = 2;
 }
+
+message GetAllTodosRequest {
+}
+
+message GetAllTodosResponse {
+    repeated GetTodoResponse todos = 1;
+}
+
