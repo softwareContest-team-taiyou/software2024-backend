@@ -44,3 +44,18 @@ func (tr *TodoRepository) CreateTodo(ctx context.Context, todo *domain.Todo) err
 	}
 	return nil
 }
+func (tr *TodoRepository) GetAllTodos(ctx context.Context) ([]*domain.Todo, error) {
+	todoEntities := []*TodoEntity{}
+	if err := tr.dh.Conn(ctx).Table("todos").Find(&todoEntities).Error; err != nil {
+		return nil, err
+	}
+	todos := []*domain.Todo{}
+	for _, te := range todoEntities {
+		todos = append(todos,&domain.Todo{
+			ID:          int(te.ID),
+			Title:       te.Title,
+			Description: te.Description,
+		})
+	}
+	return todos, nil
+}

@@ -8,6 +8,7 @@ import (
 type TodoRepository interface{
 	GetTodo(ctx context.Context,id int) (*domain.Todo, error)
 	CreateTodo(ctx context.Context,todo *domain.Todo)  error
+	GetAllTodos(ctx context.Context) ([]*domain.Todo, error)
 }
 
 type TodoUsecase struct {
@@ -29,4 +30,11 @@ func (tu *TodoUsecase) CreateTodo(ctx context.Context,todo *domain.Todo) error {
 		return err
 	}
 	return nil	
+}
+func (tu *TodoUsecase) GetAllTodos(ctx context.Context) ([]*domain.Todo, error) {
+	todos,err:= tu.tr.GetAllTodos(ctx)
+	if err != nil {
+		return nil,err
+	}
+	return todos,nil
 }

@@ -9,6 +9,7 @@ import (
 type TodoUsecase interface {
 	GetTodo(ctx context.Context,id int) (*domain.Todo, error)
 	CreateTodo(ctx context.Context,todo *domain.Todo) error
+	GetAllTodos(ctx context.Context) ([]*domain.Todo, error)
 }
 type TodoHandler struct {
 	todov1.UnimplementedTodoServiceServer
@@ -40,5 +41,23 @@ func (th *TodoHandler) CreateTodo(ctx context.Context, req *todov1.CreateTodoReq
 	}
 	return &todov1.CreateTodoResponse{
 		Status: todov1.Status_SUCCESS, // Enum値の参照方法
+	}, nil
+}
+
+func (th *TodoHandler) GetAllTodos(ctx context.Context, req *todov1.GetAllTodosRequest) (*todov1.GetAllTodosResponse, error) {
+	todo,err := th.tu.GetAllTodos(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var todos []*todov1.GetTodoResponse
+	for _, t := range todo {
+		todos = append(todos, &todov1.GetTodoResponse{
+			Id: int32(t.ID),
+			Title: t.Title,
+			Description: t.Description,
+		})
+	}
+	return &todov1.GetAllTodosResponse{
+		Todos: todos,
 	}, nil
 }
