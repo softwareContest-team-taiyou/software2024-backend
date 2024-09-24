@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain"
 )
@@ -26,6 +27,7 @@ func (tu *TodoUsecase) GetTodo(ctx context.Context,id int) (*domain.Todo, error)
 	return todo,nil
 }
 func (tu *TodoUsecase) CreateTodo(ctx context.Context,todo *domain.Todo) error {
+	fmt.Print(ctx.Value("uid"));
 	if err := tu.tr.CreateTodo(ctx,todo); err != nil {
 		return err
 	}

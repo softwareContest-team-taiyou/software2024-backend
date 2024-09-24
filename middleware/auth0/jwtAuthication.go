@@ -32,7 +32,7 @@ func AuthInterceptor(domain, clientID string, jwks *JWKS) grpc.UnaryServerInterc
 	
 
 				if err != nil || !token.Valid {
-					fmt.Print(err)
+					(err)
 					return nil, status.Errorf(codes.Unauthenticated, "invalid or expired token: %v", err)
 				}
 				  claims, ok := token.Claims.(jwt.MapClaims)
@@ -45,6 +45,7 @@ func AuthInterceptor(domain, clientID string, jwks *JWKS) grpc.UnaryServerInterc
 				if !ok {
 					return nil, status.Error(codes.Unauthenticated, "uid not found in token")
 				}
+		
 
         		// Optionally, add the UID to the context for use in subsequent handlers
        			ctx = context.WithValue(ctx, "uid", uid)
