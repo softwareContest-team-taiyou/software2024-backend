@@ -32,7 +32,7 @@ func AuthInterceptor(domain, clientID string, jwks *JWKS) grpc.UnaryServerInterc
 	
 
 				if err != nil || !token.Valid {
-					(err)
+					fmt.Print(err)
 					return nil, status.Errorf(codes.Unauthenticated, "invalid or expired token: %v", err)
 				}
 				  claims, ok := token.Claims.(jwt.MapClaims)
