@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	todov1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/todo"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain"
@@ -36,6 +37,8 @@ func (th *TodoHandler) CreateTodo(ctx context.Context, req *todov1.CreateTodoReq
 		Title: req.Title,
 		Description: req.Description,
 	}
+	fmt.Print("fjojojojoj")
+	fmt.Print(ctx)
 	if err := th.tu.CreateTodo(ctx, todo); err != nil {
 		return nil, err
 	}

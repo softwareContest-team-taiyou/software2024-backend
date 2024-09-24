@@ -4,6 +4,8 @@ go 1.22.4
 
 require (
 	github.com/99designs/gqlgen v0.17.49
+	github.com/form3tech-oss/jwt-go v3.2.5+incompatible
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.66.0

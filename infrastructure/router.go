@@ -14,14 +14,25 @@ import (
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain/repository"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/handler"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/usecase"
+	"github.com/softwareContest-team-taiyou/software2024-backend/middleware/auth0"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 )
 
 func Router() {
-	databaseHandler := NewDatabaseHandler()
 	port := os.Getenv("PORT")
+	domain := os.Getenv("AUTH0_DOMAIN")
+	clientID := os.Getenv("AUTH0_CLIENT_ID")
+	jwks, err := auth0.FetchJWKS(domain)
+	 if err != nil {
+        log.Fatal(err)
+    }
+    // domain, clientID, 公開鍵を元にJWTMiddlewareを作成する
+   
+
+	databaseHandler := NewDatabaseHandler()
+
 	if port == "" {
 		log.Fatal("PORT environment variable not set.")
 	}
@@ -49,8 +60,9 @@ func Router() {
 	srv := grpc.NewServer(   
 		grpc_middleware.WithUnaryServerChain(
         grpc_ctxtags.UnaryServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
-        grpc_zap.UnaryServerInterceptor(zapLogger, opts...),        
-	),)
+        grpc_zap.UnaryServerInterceptor(zapLogger, opts...), 
+		     
+	),grpc.UnaryInterceptor(auth0.AuthInterceptor(domain,clientID,jwks)),)
 
 	todov1.RegisterTodoServiceServer(srv, todoHandler)
 		// ログを出力するmiddlewareを実行
