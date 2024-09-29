@@ -65,7 +65,7 @@ func (uh *UserHandler) UpdateUser(ctx context.Context, req *userv1.UpdateUserReq
 		ID:   userID,
 		Name: req.Name,
 	}
-	if err := uh.uu.CreateUser(ctx, user); err != nil {
+	if err := uh.uu.UpdateUser(ctx, user); err != nil {
 		return nil, err
 	}
 	return &userv1.UpdateUserResponse{
