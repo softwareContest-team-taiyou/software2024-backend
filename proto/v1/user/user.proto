@@ -6,6 +6,7 @@ package proto.user.v1;
 service UserService {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
     rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
 }
 
 enum Status {
@@ -25,5 +26,13 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
+    Status status = 1;
+}
+
+message UpdateUserRequest {
+    string name = 1;
+}
+
+message UpdateUserResponse {
     Status status = 1;
 }

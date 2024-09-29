@@ -62,3 +62,16 @@ func (ur *UserRepository) CheckUserExists(ctx context.Context, id string) (bool,
 	// ユーザーが存在する場合は true を返します。
 	return true, nil
 }
+
+func (ur *UserRepository) UpdateUser(ctx context.Context, user *domain.User) error {
+	// UserEntity のインスタンスを作成します。
+	userEntity := &UserEntity{
+		ID:   user.ID,
+		Name: user.Name,
+	}
+	// データベースのユーザー情報を更新します。
+	if err := ur.dh.Conn(ctx).Table("users").Save(userEntity).Error; err != nil {
+		return err
+	}
+	return nil
+}

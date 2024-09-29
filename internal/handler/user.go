@@ -12,6 +12,7 @@ import (
 type UserUsecase interface {
 	GetUser(ctx context.Context, id string) (*domain.User, error)
 	CreateUser(ctx context.Context, user *domain.User) error
+	UpdateUser(ctx context.Context, user *domain.User) error
 }
 type UserHandler struct {
 	userv1.UnimplementedUserServiceServer
@@ -54,3 +55,22 @@ func (uh *UserHandler) CreateUser(ctx context.Context, req *userv1.CreateUserReq
 		Status: userv1.Status_SUCCESS,
 	}, nil
 }
+
+func (uh *UserHandler) UpdateUser(ctx context.Context, req *userv1.UpdateUserRequest) (*userv1.UpdateUserResponse, error) {
+	userID, ok := ctx.Value("uid").(string)
+	if ok != true {
+		return nil, errors.New("uid not found")
+	}
+	user := &domain.User{
+		ID:   userID,
+		Name: req.Name,
+	}
+	if err := uh.uu.CreateUser(ctx, user); err != nil {
+		return nil, err
+	}
+	return &userv1.UpdateUserResponse{
+		Status: userv1.Status_SUCCESS,
+	}, nil
+}
+
+

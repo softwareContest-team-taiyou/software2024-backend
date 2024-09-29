@@ -10,6 +10,7 @@ type UserRepository interface {
 	GetUser(ctx context.Context, id string) (*domain.User, error)
 	CreateUser(ctx context.Context, user *domain.User) error
 	CheckUserExists(ctx context.Context, id string) (bool, error)
+	UpdateUser(ctx context.Context, user *domain.User) error
 }
 
 type UserUsecase struct {
@@ -40,6 +41,13 @@ func(uu *UserUsecase) CreateUser(ctx context.Context, user *domain.User) error {
 	}
 	// なければfalseを返す
 	if err := uu.ur.CreateUser(ctx, user); err != nil {
+		return err
+	}
+	return nil
+}
+
+func(uu *UserUsecase) UpdateUser(ctx context.Context, user *domain.User) error {
+	if err := uu.ur.UpdateUser(ctx, user); err != nil {
 		return err
 	}
 	return nil
