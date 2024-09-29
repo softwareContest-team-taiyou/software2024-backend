@@ -22,8 +22,6 @@ const (
 	TodoService_GetTodo_FullMethodName     = "/proto.todo.v1.TodoService/GetTodo"
 	TodoService_CreateTodo_FullMethodName  = "/proto.todo.v1.TodoService/CreateTodo"
 	TodoService_GetAllTodos_FullMethodName = "/proto.todo.v1.TodoService/GetAllTodos"
-	TodoService_CreateUser_FullMethodName  = "/proto.todo.v1.TodoService/CreateUser"
-	TodoService_GetUser_FullMethodName     = "/proto.todo.v1.TodoService/GetUser"
 )
 
 // TodoServiceClient is the client API for TodoService service.
@@ -35,8 +33,6 @@ type TodoServiceClient interface {
 	// Defines a method to create a todo item
 	CreateTodo(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*CreateTodoResponse, error)
 	GetAllTodos(ctx context.Context, in *GetAllTodosRequest, opts ...grpc.CallOption) (*GetAllTodosResponse, error)
-	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 }
 
 type todoServiceClient struct {
@@ -74,24 +70,6 @@ func (c *todoServiceClient) GetAllTodos(ctx context.Context, in *GetAllTodosRequ
 	return out, nil
 }
 
-func (c *todoServiceClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
-	out := new(CreateUserResponse)
-	err := c.cc.Invoke(ctx, TodoService_CreateUser_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *todoServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
-	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, TodoService_GetUser_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TodoServiceServer is the server API for TodoService service.
 // All implementations must embed UnimplementedTodoServiceServer
 // for forward compatibility
@@ -101,8 +79,6 @@ type TodoServiceServer interface {
 	// Defines a method to create a todo item
 	CreateTodo(context.Context, *CreateTodoRequest) (*CreateTodoResponse, error)
 	GetAllTodos(context.Context, *GetAllTodosRequest) (*GetAllTodosResponse, error)
-	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	mustEmbedUnimplementedTodoServiceServer()
 }
 
@@ -118,12 +94,6 @@ func (UnimplementedTodoServiceServer) CreateTodo(context.Context, *CreateTodoReq
 }
 func (UnimplementedTodoServiceServer) GetAllTodos(context.Context, *GetAllTodosRequest) (*GetAllTodosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTodos not implemented")
-}
-func (UnimplementedTodoServiceServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
-}
-func (UnimplementedTodoServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 func (UnimplementedTodoServiceServer) mustEmbedUnimplementedTodoServiceServer() {}
 
@@ -192,42 +162,6 @@ func _TodoService_GetAllTodos_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TodoService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TodoServiceServer).CreateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TodoService_CreateUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TodoServiceServer).CreateUser(ctx, req.(*CreateUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TodoService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TodoServiceServer).GetUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TodoService_GetUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TodoServiceServer).GetUser(ctx, req.(*GetUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // TodoService_ServiceDesc is the grpc.ServiceDesc for TodoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -246,14 +180,6 @@ var TodoService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllTodos",
 			Handler:    _TodoService_GetAllTodos_Handler,
-		},
-		{
-			MethodName: "CreateUser",
-			Handler:    _TodoService_CreateUser_Handler,
-		},
-		{
-			MethodName: "GetUser",
-			Handler:    _TodoService_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
