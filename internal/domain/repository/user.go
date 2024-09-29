@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
+	"errors"
 
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain"
+	"gorm.io/gorm"
 )
 
 type UserEntity struct {
@@ -39,4 +41,24 @@ func (ur *UserRepository) CreateUser(ctx context.Context, user *domain.User) err
 		return err
 	}
 	return nil
+}
+
+
+func (ur *UserRepository) CheckUserExists(ctx context.Context, id string) (bool, error) {
+	// UserEntity のインスタンスを作成します。
+	userEntity := &UserEntity{}
+	// データベースからユーザーを検索し、結果を userEntity に格納します。
+	
+	err := ur.dh.Conn(ctx).Table("users").Where("id = ?", id).First(userEntity).Error
+	// レコードが見つからない場合は false を返します。
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// ユーザーが存在しない場合
+			return false, nil
+		}
+		// その他のエラーが発生した場合
+		return false, err
+	}
+	// ユーザーが存在する場合は true を返します。
+	return true, nil
 }
