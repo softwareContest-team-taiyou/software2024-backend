@@ -1,6 +1,3 @@
-genType:
-	gqlgen generate --config ./graphql/gqlgen.yml
-
 bl-local:
 	cd ./build && docker compose build --no-cache
 
