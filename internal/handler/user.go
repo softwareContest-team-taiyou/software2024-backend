@@ -14,7 +14,7 @@ type UserUsecase interface {
 	CreateUser(ctx context.Context, user *domain.User) error
 }
 type UserHandler struct {
-	userv1.UnimplementedTodoServiceServer
+	userv1.UnimplementedUserServiceServer
 	uu UserUsecase
 }
 
@@ -37,8 +37,14 @@ func (uh *UserHandler) GetUser(ctx context.Context, req *userv1.GetUserRequest) 
 		Name : user.Name,
 	}, nil
 }
+
 func (uh *UserHandler) CreateUser(ctx context.Context, req *userv1.CreateUserRequest) (*userv1.CreateUserResponse, error) {
+	userID, ok := ctx.Value("uid").(string)
+	if ok != true {
+		return nil, errors.New("uid not found")
+	}
 	user := &domain.User{
+		ID:   userID,
 		Name: "",
 	}
 	if err := uh.uu.CreateUser(ctx, user); err != nil {
