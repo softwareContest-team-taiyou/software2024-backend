@@ -3,7 +3,7 @@ syntax = "proto3";
 package proto.user.v1;
 
 // Defines the Todo service
-service TodoService {
+service UserService {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
     rpc GetUser (GetUserRequest) returns (GetUserResponse);
 }
