@@ -9,6 +9,8 @@ service TodoService {
     // Defines a method to create a todo item
     rpc CreateTodo (CreateTodoRequest) returns (CreateTodoResponse);
     rpc GetAllTodos (GetAllTodosRequest) returns (GetAllTodosResponse);
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
 }
 enum Status {
     SUCCESS = 0;  // 成功
@@ -43,4 +45,19 @@ message GetAllTodosRequest {
 message GetAllTodosResponse {
     repeated GetTodoResponse todos = 1;
 }
+
+message CreateUserRequest {
+}
+
+message CreateUserResponse {
+    Status status = 1;
+}
+
+message GetUserRequest {
+}
+
+message GetUserResponse {
+    string name = 1;
+}
+
 
