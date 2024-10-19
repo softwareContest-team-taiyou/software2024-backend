@@ -20,7 +20,7 @@ message GetUserRequest {
 
 message GetUserResponse {
     string name = 1;
-    string is_lock = 2;
+    string is_init = 2;
 }
 
 message CreateUserRequest {
@@ -32,7 +32,7 @@ message CreateUserResponse {
 
 message UpdateUserRequest {
     string name = 1;
-    string is_lock = 2;
+    string is_init = 2;
 }
 
 message UpdateUserResponse {
