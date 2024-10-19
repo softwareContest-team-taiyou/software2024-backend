@@ -1,7 +1,9 @@
 services:
   db:
-    image: mysql:8.0 # imageのコンテナ名を利用、ネット上にあるimageを使う。
-    container_name: db # コンテナ名を指定
+    image: mysql:8.0.39 # imageのコンテナ名を利用、ネット上にあるimageを使う。
+    container_name: boxkeyper_db # コンテナ名を指定
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
     environment: # 環境変数を指定
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: "boxkeyper_db" # データベース名
@@ -17,7 +19,7 @@ services:
       retries: 3 # リトライ回数
   backend:
     build: .
-    container_name: grahql-backend
+    container_name: boxkeyper-backend
     env_file:
       - .env
     command: sh -c "sh ./build/init.sh"

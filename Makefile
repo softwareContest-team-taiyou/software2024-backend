@@ -5,10 +5,10 @@ up-local:
 	cd ./build && docker compose up
 
 inBackend:
-	docker exec -it grahql-backend bash
+	docker exec -it boxkeyper-backend bash
 
 InDb: 
-	docker exec -it mysql-db bash
+	docker exec -it boxkeyper_db bash
 
 genBuf: 
 	buf generate proto
