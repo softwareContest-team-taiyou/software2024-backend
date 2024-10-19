@@ -35,3 +35,40 @@ func (br *BoxRepository) CreateBox(ctx context.Context, box *domain.Box,userId  
 	}
 	return nil
 }
+
+func (br *BoxRepository) IsLock(ctx context.Context, UserId string) (*domain.Box, error) {
+	boxEntity := &BoxEntity{}
+	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+		return nil, err
+	}
+	return &domain.Box{
+		ID:   boxEntity.ID,
+		Name : boxEntity.Name,
+		IsLock: boxEntity.IsLock,
+	}, nil
+}
+
+func (br *BoxRepository) Lock(ctx context.Context, UserId string) error {
+	boxEntity := &BoxEntity{}
+	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+		return err
+	}
+	boxEntity.IsLock = true
+	if err := br.dh.Conn(ctx).Table("boxs").Save(boxEntity).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (br *BoxRepository) Unlock(ctx context.Context, UserId string) error {
+	boxEntity := &BoxEntity{}
+	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+		return err
+	}
+	boxEntity.IsLock = false
+	if err := br.dh.Conn(ctx).Table("boxs").Save(boxEntity).Error; err != nil {
+		return err
+	}
+	return nil
+}
+

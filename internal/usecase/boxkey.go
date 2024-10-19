@@ -11,6 +11,9 @@ type KeyRepository interface {
 }
 type BoxRepository interface {
 	CreateBox(ctx context.Context, box *domain.Box,userId string) error
+	IsLock(ctx context.Context, UserId string) (*domain.Box, error)
+	Lock (ctx context.Context, UserId string) error
+	Unlock (ctx context.Context, UserId string) error
 }
 
 type BoxKeyRepository interface {
