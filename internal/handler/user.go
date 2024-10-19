@@ -36,6 +36,7 @@ func (uh *UserHandler) GetUser(ctx context.Context, req *userv1.GetUserRequest) 
 	}
 	return &userv1.GetUserResponse{
 		Name : user.Name,
+		IsInit: user.IsInit,
 	}, nil
 }
 
