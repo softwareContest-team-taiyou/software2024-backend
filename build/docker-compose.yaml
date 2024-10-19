@@ -1,10 +1,10 @@
 services:
   db:
     image: mysql:8.0 # imageのコンテナ名を利用、ネット上にあるimageを使う。
-    container_name: mysql-db # コンテナ名を指定
+    container_name: db # コンテナ名を指定
     environment: # 環境変数を指定
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: "mysql_template" # データベース名
+      MYSQL_DATABASE: "boxkeyper_db" # データベース名
       MYSQL_USER: test-user
       MYSQL_PASSWORD: test-pass
       TZ: "Asia/Tokyo" # タイムゾーンを指定
