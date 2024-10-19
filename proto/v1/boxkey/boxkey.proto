@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package proto.keybox.v1;
+package proto.boxkey.v1;
 
 // Defines the Todo service
-service UserService {
+service BoxKeyService {
     rpc InitCreate (InitCreateRequest) returns (InitCreateResponse);
 }
 
