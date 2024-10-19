@@ -16,6 +16,18 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+--
 -- Table structure for table `boxs`
 --
 
@@ -60,25 +72,14 @@ DROP TABLE IF EXISTS `keys`;
 CREATE TABLE `keys` (
   `id` varchar(45) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `users_id` varchar(45) NOT NULL,
+  `user_id` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_keys_users1_idx` (`users_id`),
-  CONSTRAINT `fk_keys_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+  KEY `fk_keys_users1_idx` (`user_id`),
+  CONSTRAINT `fk_keys_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `users`
---
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` varchar(45) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

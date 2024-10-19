@@ -7,10 +7,10 @@ import (
 )
 
 type KeyRepository interface {
-	CreateKey(ctx context.Context, key *domain.Key) error
+	CreateKey(ctx context.Context, key *domain.Key,userId string) error
 }
 type BoxRepository interface {
-	CreateBox(ctx context.Context, box *domain.Box) error
+	CreateBox(ctx context.Context, box *domain.Box,userId string) error
 }
 
 type BoxKeyRepository interface {
@@ -30,10 +30,11 @@ func NewBoxKeyUsecase(userRepository UserRepository, boxKeyRepository BoxKeyRepo
 
 
 func (bu *BoxKeyUseCase) InitCreateBoxKey(ctx context.Context, box *domain.Box, key *domain.Key, userID string) error {
-	if err := bu.br.CreateBox(ctx, box); err != nil {
+	
+	if err := bu.br.CreateBox(ctx, box, userID); err != nil {
 		return err
 	}
-	if err := bu.kr.CreateKey(ctx, key); err != nil {
+	if err := bu.kr.CreateKey(ctx, key,userID); err != nil {
 		return err
 	}
 	if err := bu.bkr.CreateBoxKey(ctx, box, key); err != nil {

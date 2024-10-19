@@ -7,8 +7,8 @@ import (
 )
 
 type BoxKey struct {
-	BoxID string `varchar(45)`
-	KeyID string `varchar(45)`
+	BoxsID string `varchar(45)`
+	KeysID string `varchar(45)`
 }
 
 type BoxKeyRepository struct {
@@ -21,10 +21,10 @@ func NewBoxKeyRepository(dh DatabaseHandler) *BoxKeyRepository {
 
 func (bkr *BoxKeyRepository) CreateBoxKey(ctx context.Context, box *domain.Box, key *domain.Key) error {
 	newBoxKey := &BoxKey{
-		BoxID: box.ID,
-		KeyID: key.ID,
+		BoxsID: box.ID,
+		KeysID: key.ID,
 	}
-	if err := bkr.dh.Conn(ctx).Table("box_keys").Create(newBoxKey).Error; err != nil {
+	if err := bkr.dh.Conn(ctx).Table("boxs_on_keys").Create(newBoxKey).Error; err != nil {
 		return err
 	}
 	return nil

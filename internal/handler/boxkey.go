@@ -21,7 +21,8 @@ func NewBoxKeyHandler(boxKeyUseCase BoxKeyUseCase) *BoxKeyHandler {
 	return &BoxKeyHandler{bu: boxKeyUseCase}
 }
 
-func (bh *BoxKeyHandler) InitCreateBoxKey(ctx context.Context, req *boxkeyv1.InitCreateRequest) (*boxkeyv1.InitCreateResponse, error) {
+func (bh *BoxKeyHandler) InitCreate(ctx context.Context, req *boxkeyv1.InitCreateRequest) (*boxkeyv1.InitCreateResponse, error) {
+
 	userID, ok := ctx.Value("uid").(string)
 	if ok != true {
 		return nil, errors.New("uid not found")
