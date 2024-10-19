@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proto.keybox.v1;
+
+// Defines the Todo service
+service UserService {
+    rpc InitCreate (InitCreateRequest) returns (InitCreateResponse);
+}
+
+enum Status {
+    SUCCESS = 0;  // 成功
+    FAILURE = 1;  // 失敗
+}
+
+
+message InitCreateRequest {
+    string keyId = 1;
+    string boxId = 2;
+}
+
+message InitCreateResponse {
+    Status status = 1;
+}
+
+

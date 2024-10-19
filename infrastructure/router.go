@@ -10,7 +10,6 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
-	todov1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/todo"
 	userv1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/user"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain/repository"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/handler"
@@ -43,7 +42,6 @@ func Router() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	todoHandler := handler.NewTodoHandler(usecase.NewTodoUsecase(repository.NewTodoRepository(databaseHandler)))
 	userHandler := handler.NewUserHandler(usecase.NewUserUsecase(repository.NewUserRepository(databaseHandler)))
 
 	opts := []grpc_zap.Option{
@@ -67,7 +65,6 @@ func Router() {
 		     
 	),grpc.UnaryInterceptor(auth0.AuthInterceptor(domain,clientID,jwks)),)
 
-	todov1.RegisterTodoServiceServer(srv, todoHandler)
 	userv1.RegisterUserServiceServer(srv, userHandler)
 		// ログを出力するmiddlewareを実行
 	
