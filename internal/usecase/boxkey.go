@@ -39,6 +39,18 @@ func (bu *BoxKeyUseCase) InitCreateBoxKey(ctx context.Context, box *domain.Box, 
 	if err := bu.bkr.CreateBoxKey(ctx, box, key); err != nil {
 		return err
 	}
+    user, err := bu.ur.GetUser(ctx, userID)
+	if err != nil {
+		return err
+	}
+	UpdateUser := &domain.User{
+		ID: user.ID,
+		Name: user.Name,
+		IsInit: true,
+	}
+	if err := bu.ur.UpdateUser(ctx, UpdateUser); err != nil {
+		return err
+	}
 	return nil
 }
 
