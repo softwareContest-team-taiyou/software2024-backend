@@ -38,7 +38,7 @@ func (br *BoxRepository) CreateBox(ctx context.Context, box *domain.Box,userId  
 
 func (br *BoxRepository) IsLock(ctx context.Context, UserId string) (*domain.Box, error) {
 	boxEntity := &BoxEntity{}
-	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+	if err := br.dh.Conn(ctx).Table("boxs").Where("user_id = ?", UserId).First(boxEntity).Error; err != nil {
 		return nil, err
 	}
 	return &domain.Box{
@@ -50,7 +50,7 @@ func (br *BoxRepository) IsLock(ctx context.Context, UserId string) (*domain.Box
 
 func (br *BoxRepository) Lock(ctx context.Context, UserId string) error {
 	boxEntity := &BoxEntity{}
-	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+	if err := br.dh.Conn(ctx).Table("boxs").Where("user_id = ?", UserId).First(boxEntity).Error; err != nil {
 		return err
 	}
 	boxEntity.IsLock = true
@@ -62,7 +62,7 @@ func (br *BoxRepository) Lock(ctx context.Context, UserId string) error {
 
 func (br *BoxRepository) Unlock(ctx context.Context, UserId string) error {
 	boxEntity := &BoxEntity{}
-	if err := br.dh.Conn(ctx).Table("boxs").Where("UserId = ?", UserId).First(boxEntity).Error; err != nil {
+	if err := br.dh.Conn(ctx).Table("boxs").Where("user_id = ?", UserId).First(boxEntity).Error; err != nil {
 		return err
 	}
 	boxEntity.IsLock = false
