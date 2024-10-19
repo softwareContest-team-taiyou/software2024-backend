@@ -10,6 +10,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	boxkeyv1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/boxkey"
 	userv1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/user"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain/repository"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/handler"
@@ -43,6 +44,12 @@ func Router() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	userHandler := handler.NewUserHandler(usecase.NewUserUsecase(repository.NewUserRepository(databaseHandler)))
+	keyBoxHandler := handler.NewBoxKeyHandler(usecase.NewBoxKeyUsecase(
+		repository.NewUserRepository(databaseHandler),
+		repository.NewBoxKeyRepository(databaseHandler),
+		repository.NewKeyRepository(databaseHandler),
+		repository.NewBoxRepository(databaseHandler),	
+	))
 
 	opts := []grpc_zap.Option{
 		grpc_zap.WithDurationField(func(duration time.Duration) zapcore.Field {
@@ -66,6 +73,7 @@ func Router() {
 	),grpc.UnaryInterceptor(auth0.AuthInterceptor(domain,clientID,jwks)),)
 
 	userv1.RegisterUserServiceServer(srv, userHandler)
+	boxkeyv1.RegisterBoxKeyServiceServer(srv, keyBoxHandler)
 		// ログを出力するmiddlewareを実行
 	
 	if err := srv.Serve(listener); err != nil {

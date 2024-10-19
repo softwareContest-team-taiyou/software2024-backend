@@ -11,6 +11,7 @@ import (
 type UserEntity struct {
 	ID   string `gorm:"primaryKey"`
 	Name string `gorm:"type:varchar(255)"`
+	IsInit bool `gorm:"type:boolean"`
 }
 
 type UserRepository struct {
@@ -29,6 +30,7 @@ func (ur *UserRepository) GetUser(ctx context.Context,id string) (*domain.User, 
 	return &domain.User{
 		ID:   userEntity.ID,
 		Name: userEntity.Name,
+		IsInit: userEntity.IsInit,
 	}, nil
 }
 
@@ -68,6 +70,7 @@ func (ur *UserRepository) UpdateUser(ctx context.Context, user *domain.User) err
 	userEntity := &UserEntity{
 		ID:   user.ID,
 		Name: user.Name,
+		IsInit: user.IsInit,
 	}
 	// データベースのユーザー情報を更新します。
 	if err := ur.dh.Conn(ctx).Table("users").Save(userEntity).Error; err != nil {
@@ -75,3 +78,4 @@ func (ur *UserRepository) UpdateUser(ctx context.Context, user *domain.User) err
 	}
 	return nil
 }
+

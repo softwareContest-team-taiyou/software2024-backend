@@ -16,6 +16,8 @@ enum Status {
 message InitCreateRequest {
     string keyId = 1;
     string boxId = 2;
+    string boxName = 3;
+    string keyName = 4;
 }
 
 message InitCreateResponse {
