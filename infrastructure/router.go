@@ -14,6 +14,7 @@ import (
 	boxkeyv1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/boxkey"
 	userv1 "github.com/softwareContest-team-taiyou/software2024-backend/gen/go/v1/user"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/domain/repository"
+	slackService "github.com/softwareContest-team-taiyou/software2024-backend/internal/domain/slack_service"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/handler"
 	"github.com/softwareContest-team-taiyou/software2024-backend/internal/usecase"
 	"github.com/softwareContest-team-taiyou/software2024-backend/middleware/auth0"
@@ -34,6 +35,7 @@ func Router() {
    
 
 	databaseHandler := NewDatabaseHandler()
+	slackBotHandler := NewSlackBotHandler()
 
 	if port == "" {
 		log.Fatal("PORT environment variable not set.")
@@ -53,6 +55,7 @@ func Router() {
 	))
 	boxHandler := handler.NewBoxHandler(usecase.NewBoxUsecase(
 		repository.NewBoxRepository(databaseHandler),
+		slackService.NewSlackService(slackBotHandler),
 	))
 
 	opts := []grpc_zap.Option{

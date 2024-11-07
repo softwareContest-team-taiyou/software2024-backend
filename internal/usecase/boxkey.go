@@ -18,6 +18,7 @@ type BoxRepository interface {
 
 type BoxKeyRepository interface {
 	CreateBoxKey(ctx context.Context, box *domain.Box, key *domain.Key) error
+	GetKeyIdByBox(ctx context.Context, boxId string) (string, error)
 }
 
 type BoxKeyUseCase struct {

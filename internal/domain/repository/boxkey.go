@@ -29,3 +29,11 @@ func (bkr *BoxKeyRepository) CreateBoxKey(ctx context.Context, box *domain.Box, 
 	}
 	return nil
 }
+// boxId から keyId を取得する
+func (bkr *BoxKeyRepository) GetKeyIdByBox(ctx context.Context, boxId string) (string, error) {
+	boxKeyEntity := &BoxKey{}
+	if err := bkr.dh.Conn(ctx).Table("boxs_on_keys").Where("boxs_id = ?", boxId).Find(boxKeyEntity).Error; err != nil {
+		return "", err
+	}
+	return boxKeyEntity.KeysID, nil
+}

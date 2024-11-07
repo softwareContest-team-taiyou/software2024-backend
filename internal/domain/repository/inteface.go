@@ -13,3 +13,4 @@ type DatabaseHandler interface {
 	// 接続の終了
 	Close()
 }
+
